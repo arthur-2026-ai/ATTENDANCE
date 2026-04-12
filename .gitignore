@@ -1,0 +1,29 @@
+# ===== GLOBAL =====
+node_modules/
+.env
+.env.*
+*.log
+logs/
+
+# ===== FRONTEND =====
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# ===== BACKEND =====
+backend/node_modules/
+
+# ===== DOCKER =====
+docker-compose.override.yml
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== IDE =====
+.vscode/
+.idea/
+
+# ===== LOCK FILE (optionnel si tu veux clean) =====
+pnpm-lock.yaml
