@@ -16,7 +16,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-background">
       <Sidebar />
       <Header />
-      <main className="ml-64 mt-16 p-6">{children}</main>
+      <main className="md:ml-64 mt-16 p-4 md:p-6 transition-all duration-300 relative z-0">
+        {children}
+      </main>
     </div>
   )
 }

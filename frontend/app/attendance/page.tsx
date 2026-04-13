@@ -153,7 +153,7 @@ export default function AttendancePage() {
 
   // --- D. Rendu Final de la Page ---
   return (
-    <div className="space-y-6 p-6 md:p-8">
+    <div className="space-y-6 p-4 sm:p-6 md:p-8">
       <h1 className="text-3xl font-bold">Dashboard Administratif de Présence</h1>
       
       {/* 1. Stats */}

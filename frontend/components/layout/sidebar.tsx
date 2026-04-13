@@ -13,7 +13,7 @@ import { useDataRefresh } from "@/lib/data-refresh-context";
 import { useState, useCallback, useMemo } from 'react';
 
 
-export function Sidebar() {
+export function SidebarContent() {
   const pathname = usePathname()
   const { user, logout } = useAuth()
   
@@ -69,7 +69,7 @@ export function Sidebar() {
 
 
   return (
-    <div className="w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border flex flex-col h-screen fixed left-0 top-0">
+    <div className="flex flex-col h-full bg-sidebar text-sidebar-foreground">
       
       {/* Logo */}
       <div className="p-6 border-b border-sidebar-border">
@@ -90,7 +90,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
         {links.map((link) => {
           const Icon = link.icon
           const isActive = pathname.startsWith(link.href) 
@@ -157,5 +157,13 @@ export function Sidebar() {
         </button>
       </div>
     </div>
+  )
+}
+
+export function Sidebar() {
+  return (
+    <aside className="w-64 bg-sidebar border-r border-sidebar-border h-screen fixed left-0 top-0 hidden md:block z-50">
+      <SidebarContent />
+    </aside>
   )
 }

@@ -35,22 +35,22 @@ export default function ProfilePage() {
   const currentEmployee = user; 
 
   return (
-    <div className="space-y-6 p-4 md:p-8">
+    <div className="space-y-6 p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
         
         {/* En-tête de profil basé sur l'utilisateur connecté */}
         <ProfileHeader employee={currentEmployee} />
 
         {/* Panneau de Pointage et Historique */}
-        <div className="grid grid-cols-6 lg:grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-6">
             
             {/* 🎯 Panneau de Pointage */}
-            <div className="lg:col-span-4">
+            <div className="w-full">
                 {/* Réutilisation du composant de pointage */}
                 <CheckInWidget /> 
             </div>
             
             {/* 🎯 Historique de Présence */}
-            <div className="lg:col-span-4">
+            <div className="w-full">
                 {/* Réutilisation du tableau d'historique personnel */}
                 <AttendanceHistory /> 
             </div>
