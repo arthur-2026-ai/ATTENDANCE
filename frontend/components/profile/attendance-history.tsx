@@ -52,11 +52,11 @@ export function AttendanceHistory() {
           <table className="w-full">
             <thead className="border-b border-border bg-muted/50">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Date</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Arrivée</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Départ</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Durée</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Statut</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap text-foreground">Date</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap text-foreground">Arrivée</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap text-foreground">Départ</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap text-foreground">Durée</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold whitespace-nowrap text-foreground">Statut</th>
               </tr>
             </thead>
             <tbody>
@@ -73,17 +73,17 @@ export function AttendanceHistory() {
 
                 return (
                   <tr key={record._id} className="border-b border-border hover:bg-muted/50 transition-colors">
-                    <td className="px-4 py-3 text-sm text-foreground font-medium">
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-foreground font-medium">
                       {/* 🎯 Correction: Formatage en français pour la cohérence */}
                       {new Date(record.date).toLocaleDateString("fr-FR", {
                         month: "short",
                         day: "numeric",
                       })}
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">{record.arrivalTime || "-"}</td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">{record.departureTime || "-"}</td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">{duration}</td>
-                    <td className="px-4 py-3 text-sm">
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-muted-foreground">{record.arrivalTime || "-"}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-muted-foreground">{record.departureTime || "-"}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-muted-foreground">{duration}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm">
                       <span
                         className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(record.status)}`}
                       >

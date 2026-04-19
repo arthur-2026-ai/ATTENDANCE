@@ -12,6 +12,7 @@ export interface Employee {
     joinDate: string; // Date d'entrée (format YYYY-MM-DD)
     passwordHash?: string; // Le hachage du mot de passe (côté backend uniquement, optionnel)
     role: 'admin' | 'employee';
+    status?: 'active' | 'inactive' | 'onLeave'; // Statut optionnel pour éviter l'erreur TS
 }
 
 

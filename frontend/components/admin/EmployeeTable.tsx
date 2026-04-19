@@ -248,27 +248,27 @@ export function EmployeeTable({ onAddClick, onEditClick, onDeleteClick, onViewDe
           <Table>
             <TableHeader className="bg-muted/50">
               <TableRow>
-                <SortHeader field="name">Nom</SortHeader>
-                <SortHeader field="email" className="hidden sm:table-cell">Email</SortHeader>
-                <TableHead className="px-4 py-3 hidden lg:table-cell">Statut</TableHead>
-                <SortHeader field="department" className="hidden md:table-cell">Département</SortHeader>
-                <SortHeader field="joinDate" className="hidden md:table-cell">Date</SortHeader>
-                <TableHead className="px-4 py-3">Actions</TableHead>
+                <SortHeader field="name" className="whitespace-nowrap">Nom</SortHeader>
+                <SortHeader field="email" className="whitespace-nowrap">Email</SortHeader>
+                <TableHead className="px-4 py-3 whitespace-nowrap">Statut</TableHead>
+                <SortHeader field="department" className="whitespace-nowrap">Département</SortHeader>
+                <SortHeader field="joinDate" className="whitespace-nowrap">Date</SortHeader>
+                <TableHead className="px-4 py-3 whitespace-nowrap">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredAndSorted.map(emp => (
                 <TableRow key={emp._id} className="hover:bg-muted/50">
-                  <TableCell className="px-4 py-4">
+                  <TableCell className="px-4 py-4 whitespace-nowrap">
                     <button onClick={() => onViewDetailsClick(emp)} className="text-sm font-semibold text-primary hover:underline">
                       {emp.firstName} {emp.lastName}
                     </button>
                   </TableCell>
-                  <TableCell className="px-4 py-4 text-sm text-muted-foreground hidden sm:table-cell">{emp.email}</TableCell>
-                  { /*<TableCell className="px-4 py-4 hidden lg:table-cell"><StatusBadge status={emp.status} /></TableCell>*/}
-                  <TableCell className="px-4 py-4 text-sm text-muted-foreground hidden md:table-cell">{emp.department || '-'}</TableCell>
-                  <TableCell className="px-4 py-4 text-sm text-muted-foreground hidden md:table-cell">{new Date(emp.joinDate).toLocaleDateString('fr-FR')}</TableCell>
-                  <TableCell className="px-4 py-4">
+                  <TableCell className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{emp.email}</TableCell>
+                  { /*<TableCell className="px-4 py-4 whitespace-nowrap hidden lg:table-cell"><StatusBadge status={emp.status} /></TableCell>*/}
+                  <TableCell className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{emp.department || '-'}</TableCell>
+                  <TableCell className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{new Date(emp.joinDate).toLocaleDateString('fr-FR')}</TableCell>
+                  <TableCell className="px-4 py-4 whitespace-nowrap">
                     <div className="flex gap-1">
                       <Button variant="ghost" size="sm" onClick={() => onViewDetailsClick(emp)} className="p-2"><Eye className="h-4 w-4" /></Button>
                       <Button variant="ghost" size="sm" onClick={() => onEditClick(emp)} className="p-2"><Edit2 className="h-4 w-4" /></Button>

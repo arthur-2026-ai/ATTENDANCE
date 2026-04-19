@@ -88,13 +88,13 @@ export function EmployeeTable({ onAddClick, onEditClick, onDeleteClick }: Employ
           <table className="min-w-full divide-y divide-border">
             <thead className="bg-muted/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground hidden sm:table-cell">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground hidden md:table-cell">Department</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground hidden lg:table-cell">Position</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground hidden lg:table-cell">Phone</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground hidden md:table-cell">Join Date</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Name</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Email</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Department</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Position</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Phone</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Join Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-foreground">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -103,11 +103,11 @@ export function EmployeeTable({ onAddClick, onEditClick, onDeleteClick }: Employ
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground font-medium">
                     {employee.firstName} {employee.lastName}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground hidden sm:table-cell">{employee.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell">{employee.department}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground hidden lg:table-cell">{employee.position}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground hidden lg:table-cell">{employee.phone}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{employee.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{employee.department}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{employee.position}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{employee.phone}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                     {new Date(employee.joinDate).toLocaleDateString('fr-FR')}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">

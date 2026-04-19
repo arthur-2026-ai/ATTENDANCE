@@ -34,10 +34,7 @@ app.get('/', (req, res) => {
 });
 
 // --- Connexion MongoDB + Lancement serveur ---
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(MONGO_URI)
 .then(() => {
     console.log(`💾 MongoDB connecté : ${MONGO_URI}`);
     app.listen(PORT, '0.0.0.0', () => {

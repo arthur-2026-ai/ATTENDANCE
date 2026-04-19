@@ -66,12 +66,12 @@ export function AttendanceTable({ attendanceData, filters }: AttendanceTableProp
         <table className="min-w-full divide-y divide-border">
           <thead className="bg-muted/50">
             <tr>
-              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Date</th>
-              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Employé</th>
-              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Département</th>
-              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Arrivée</th>
-              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Départ</th>
-              <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Statut</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-muted-foreground">Date</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-muted-foreground">Employé</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-muted-foreground">Département</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-muted-foreground">Arrivée</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-muted-foreground">Départ</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold uppercase whitespace-nowrap tracking-wider text-muted-foreground">Statut</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
