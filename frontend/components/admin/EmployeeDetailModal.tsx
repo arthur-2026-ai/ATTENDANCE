@@ -12,21 +12,8 @@ import { Button } from "@/components/ui/button"
 import { User, Mail, Briefcase, Calendar, Phone, MapPin, DollarSign, Building2 } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
+import { Employee } from '../../lib/employee-context-types'
 
-// Type Employee étendu pour inclure tous les champs possibles
-interface Employee {
-  id: string
-  firstName: string
-  lastName: string
-  email: string
-  phone?: string
-  department: string
-  position: string
-  joinDate: string | Date
-  salary?: number
-  address?: string
-  status?: 'active' | 'inactive' | 'onLeave'
-}
 
 interface EmployeeDetailModalProps {
   isOpen: boolean
@@ -75,23 +62,6 @@ export function EmployeeDetailModal({ isOpen, onClose, employee }: EmployeeDetai
     } catch (error) {
       console.error('Erreur de formatage de date:', error)
       return "Date invalide"
-    }
-  }, [])
-
-  // Fonction de formatage de salaire mémorisée
-  const formatSalary = useCallback((salary?: number): string => {
-    if (!salary || salary === 0) return "N/A"
-    
-    try {
-      return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'XAF', // Franc CFA d'Afrique Centrale
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(salary)
-    } catch (error) {
-      // Fallback si XAF n'est pas supporté
-      return `${salary.toLocaleString('fr-FR')} FCFA`
     }
   }, [])
 
@@ -198,15 +168,6 @@ export function EmployeeDetailModal({ isOpen, onClose, employee }: EmployeeDetai
             value={employee.phone} 
           />
 
-          {employee.address && (
-            <div className="col-span-1 md:col-span-2">
-              <DetailItem 
-                icon={MapPin} 
-                label="Adresse" 
-                value={employee.address} 
-              />
-            </div>
-          )}
 
           <Separator className="col-span-1 md:col-span-2 my-2" />
 
@@ -241,21 +202,12 @@ export function EmployeeDetailModal({ isOpen, onClose, employee }: EmployeeDetai
             />
           )}
           
-          {employee.salary && (
-            <div className="col-span-1 md:col-span-2">
-              <DetailItem 
-                icon={DollarSign} 
-                label="Salaire mensuel" 
-                value={formatSalary(employee.salary)} 
-              />
-            </div>
-          )}
         </div>
 
         {/* Footer avec actions */}
         <div className="pt-6 flex justify-between items-center border-t">
           <p className="text-xs text-muted-foreground">
-            ID: {employee.id}
+            ID: {employee._id}
           </p>
           <div className="flex gap-2">
             <Button onClick={handleClose} variant="outline">

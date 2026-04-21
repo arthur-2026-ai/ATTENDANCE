@@ -27,19 +27,7 @@ import {
   CheckCircle,
 } from "lucide-react"
 import { useEmployees } from "../../lib/employee-context"
-import { type Employee as EmployeeType } from "../../lib/employee-context-types"
-// Types
-interface Employee {
-  _id: string
-  firstName: string
-  lastName: string
-  email: string
-  department?: string
-  position?: string
-  phone?: string
-  joinDate: string | Date
-  status?: 'active' | 'inactive' | 'onLeave'
-}
+import { Employee } from "../../lib/employee-context-types"
 
 interface EmployeeTableProps {
   onAddClick: () => void

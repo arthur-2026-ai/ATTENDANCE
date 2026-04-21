@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, memo } from "react" 
+import { useMemo, memo } from "react"
 import { redirect } from "next/navigation"
 import { Users, CheckCircle, Clock, AlertCircle, Loader2, UserX, TrendingUp, Calendar } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
@@ -80,8 +80,8 @@ const AbsentEmployeesCard = memo(({ absentEmployees, totalEmployees }: AbsentEmp
         <ScrollArea className="h-[280px] pr-4">
           <div className="space-y-2">
             {absentEmployees.map((emp) => (
-              <div 
-                key={emp._id} 
+              <div
+                key={emp._id}
                 className="flex items-center justify-between p-3 hover:bg-muted/50 rounded-lg transition-colors border border-transparent hover:border-border"
               >
                 <div className="flex-1 min-w-0">
@@ -122,7 +122,7 @@ export default function DashboardPage() {
   const { user, initialLoading } = useAuth()
   const { employees, isLoading: employeesLoading } = useEmployees()
   const { attendance, isLoading: attendanceLoading } = useAttendance()
-  
+
   // Date du jour
   const today = useMemo(() => new Date().toISOString().split('T')[0], [])
 
@@ -137,21 +137,21 @@ export default function DashboardPage() {
     // IDs des employés présents (présents ou en retard)
     const presentTodayIds = new Set(
       todayAttendance
-        .filter(record => record.status === 'Present' || record.status === 'Late')
+        .filter(record => record.status === 'Présent' || record.status === 'En retard')
         .map(record => record.employeeId)
     )
 
     // Calculs
     const totalEmployees = employees.length
     const presentToday = presentTodayIds.size
-    const lateArrivals = todayAttendance.filter(record => record.status === 'Late').length
+    const lateArrivals = todayAttendance.filter(record => record.status === 'En retard').length
     const absentToday = totalEmployees - presentToday
-    
+
     // Liste des employés absents
     const absentEmployees = employees.filter(emp => !presentTodayIds.has(emp._id))
 
     // Taux de présence
-    const attendanceRate = totalEmployees > 0 
+    const attendanceRate = totalEmployees > 0
       ? ((presentToday / totalEmployees) * 100).toFixed(1)
       : "0"
 
@@ -162,7 +162,7 @@ export default function DashboardPage() {
         acc[deptName] = { count: 0, present: 0 }
       }
       acc[deptName].count += 1
-      
+
       if (presentTodayIds.has(emp._id)) {
         acc[deptName].present += 1
       }
@@ -223,11 +223,11 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-foreground">Tableau de Bord Administrateur</h1>
           <p className="text-muted-foreground mt-2 flex items-center gap-2">
             <Calendar className="h-4 w-4" aria-hidden="true" />
-            Aperçu pour le {new Date().toLocaleDateString('fr-FR', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
+            Aperçu pour le {new Date().toLocaleDateString('fr-FR', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
             })}
           </p>
         </div>
@@ -235,11 +235,11 @@ export default function DashboardPage() {
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard 
-          title="Total Employés" 
-          value={stats.totalEmployees.toString()} 
-          icon={Users} 
-          color="blue" 
+        <StatCard
+          title="Total Employés"
+          value={stats.totalEmployees.toString()}
+          icon={Users}
+          color="blue"
         />
         <StatCard
           title="Présents Aujourd'hui"
@@ -247,17 +247,17 @@ export default function DashboardPage() {
           icon={CheckCircle}
           color="green"
         />
-        <StatCard 
-          title="Arrivées en Retard" 
-          value={stats.lateArrivals.toString()} 
-          icon={Clock} 
-          color="orange" 
+        <StatCard
+          title="Arrivées en Retard"
+          value={stats.lateArrivals.toString()}
+          icon={Clock}
+          color="orange"
         />
-        <StatCard 
-          title="Absents" 
-          value={stats.absentToday.toString()} 
-          icon={AlertCircle} 
-          color="red" 
+        <StatCard
+          title="Absents"
+          value={stats.absentToday.toString()}
+          icon={AlertCircle}
+          color="red"
         />
       </div>
 
@@ -265,7 +265,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* Liste des Absents */}
-        <AbsentEmployeesCard 
+        <AbsentEmployeesCard
           absentEmployees={stats.absentEmployees}
           totalEmployees={stats.totalEmployees}
         />
@@ -282,8 +282,8 @@ export default function DashboardPage() {
                 <p className="text-3xl font-bold text-primary">{stats.attendanceRate}%</p>
               </div>
               <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
-                <div 
-                  className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out" 
+                <div
+                  className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${stats.attendanceRate}%` }}
                   role="progressbar"
                   aria-valuenow={Number(stats.attendanceRate)}
