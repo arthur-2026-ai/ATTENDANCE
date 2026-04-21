@@ -34,12 +34,18 @@ services:
     build:
       context: ./frontend
       args:
-        # CRUCIAL : On injecte l'IP de ton serveur ici pour le code client
-        - NEXT_PUBLIC_API_URL=http://192.168.1.39:5000
+        # CRUCIAL : Remplace ceci par l'IP publique de ton Droplet ou utilise un fichier .env
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://192.168.1.39:5000}
+        - NEXT_PUBLIC_OFFICE_LAT=${NEXT_PUBLIC_OFFICE_LAT:-48.8566}
+        - NEXT_PUBLIC_OFFICE_LNG=${NEXT_PUBLIC_OFFICE_LNG:-2.3522}
+        - NEXT_PUBLIC_OFFICE_RADIUS_METERS=${NEXT_PUBLIC_OFFICE_RADIUS_METERS:-150}
     image: fotsohub/web-orionattendance:latest
     container_name: attendance_frontend
     environment:
-      - NEXT_PUBLIC_API_URL=http://192.168.1.39:5000
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://192.168.1.39:5000}
+      - NEXT_PUBLIC_OFFICE_LAT=${NEXT_PUBLIC_OFFICE_LAT:-48.8566}
+      - NEXT_PUBLIC_OFFICE_LNG=${NEXT_PUBLIC_OFFICE_LNG:-2.3522}
+      - NEXT_PUBLIC_OFFICE_RADIUS_METERS=${NEXT_PUBLIC_OFFICE_RADIUS_METERS:-150}
     depends_on:
       - api
     ports:

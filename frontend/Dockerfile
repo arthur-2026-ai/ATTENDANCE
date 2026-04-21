@@ -15,6 +15,9 @@ COPY . .
 
 # Cette valeur est injectée par le docker-compose.yml (http://api:5000)
 ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_OFFICE_LAT
+ARG NEXT_PUBLIC_OFFICE_LNG
+ARG NEXT_PUBLIC_OFFICE_RADIUS_METERS
 
 # Exécution du build (génère le dossier .next)
 RUN npm run build
@@ -36,7 +39,10 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
 # Définir les variables d'environnement
-ENV NEXT_PUBLIC_API_URL=
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_OFFICE_LAT=$NEXT_PUBLIC_OFFICE_LAT
+ENV NEXT_PUBLIC_OFFICE_LNG=$NEXT_PUBLIC_OFFICE_LNG
+ENV NEXT_PUBLIC_OFFICE_RADIUS_METERS=$NEXT_PUBLIC_OFFICE_RADIUS_METERS
 ENV PORT=3000
 
 # Exposer le port

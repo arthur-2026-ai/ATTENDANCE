@@ -18,6 +18,13 @@ import {
 
 import { useAuth } from "../../lib/auth-context"
 import { useAttendance } from "../../lib/attendance-context"
+import { validateOfficeLocation } from "../../lib/geolocation"
+
+// Configuration de la zone depuis les variables d'environnement
+const OFFICE_LAT = parseFloat(process.env.NEXT_PUBLIC_OFFICE_LAT || "0")
+const OFFICE_LNG = parseFloat(process.env.NEXT_PUBLIC_OFFICE_LNG || "0")
+const OFFICE_RADIUS = parseInt(process.env.NEXT_PUBLIC_OFFICE_RADIUS_METERS || "150", 10)
+
 
 // Utilitaire pour obtenir la date locale au format YYYY-MM-DD
 const getLocalDateString = (date: Date = new Date()): string => {
@@ -116,8 +123,17 @@ export function CheckInWidget() {
     setError(null)
     setSuccess(null)
     setIsProcessing(true)
-    
+
     try {
+      // 1. Vérification GPS (Seulement pour les employés, et si les variables sont configurées)
+      if (user.role !== 'admin' && OFFICE_LAT !== 0 && OFFICE_LNG !== 0) {
+        const geoResult = await validateOfficeLocation(OFFICE_LAT, OFFICE_LNG, OFFICE_RADIUS);
+        if (!geoResult.isValid) {
+          throw new Error(geoResult.error || "Géolocalisation invalide.");
+        }
+      }
+
+      // 2. Pointage
       const timeString = formatTime()
       await addCheckIn(today, timeString)
       setSuccess(`Arrivée pointée avec succès à ${timeString}`)
@@ -136,6 +152,15 @@ export function CheckInWidget() {
     setIsProcessing(true)
     
     try {
+      // 1. Vérification GPS
+      if (user.role !== 'admin' && OFFICE_LAT !== 0 && OFFICE_LNG !== 0) {
+        const geoResult = await validateOfficeLocation(OFFICE_LAT, OFFICE_LNG, OFFICE_RADIUS);
+        if (!geoResult.isValid) {
+          throw new Error(geoResult.error || "Géolocalisation invalide.");
+        }
+      }
+
+      // 2. Pointage
       const timeString = formatTime()
       await addCheckOut(today, timeString)
       setSuccess(`Départ pointé avec succès à ${timeString}`)
@@ -145,6 +170,7 @@ export function CheckInWidget() {
       setIsProcessing(false)
     }
   }, [user, today, addCheckOut])
+
 
   // État de chargement global
   if (isLoading) {
