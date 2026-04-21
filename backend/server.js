@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import attendanceRoutes from './routes/attendance.js';
 import employeeRoutes from './routes/employees.js';
+import leaveRoutes from './routes/leaves.js';
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -25,6 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/employees', employeeRoutes);
+app.use('/api/leaves', leaveRoutes);
 
 // --- Route de test ---
 app.get('/', (req, res) => {

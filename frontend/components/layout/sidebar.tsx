@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle"
 import { cn } from "@/lib/utils"
 // 🎯 Import du contexte de rafraîchissement global
 import { useDataRefresh } from "@/lib/data-refresh-context"; 
+import { useLeaves } from "@/lib/leave-context";
 import { useState, useCallback, useMemo } from 'react';
 
 
@@ -19,6 +20,7 @@ export function SidebarContent() {
   
   // 🎯 UTILISATION DU CONTEXTE DE RAFRAÎCHISSEMENT GLOBAL
   const { refreshAllData, isGlobalRefreshing: isRefreshing } = useDataRefresh();
+  const { pendingCount } = useLeaves();
 
   // 🎯 MAINTENIR L'ÉTAT DU DERNIER RAFRAÎCHISSEMENT (pour l'affichage)
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
@@ -29,10 +31,12 @@ export function SidebarContent() {
     { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
     { href: "/employees", label: "Employés", icon: Users },
     { href: "/attendance", label: "Présence", icon: Clock },
+    { href: "/leaves", label: "Congés", icon: Clock, badge: pendingCount }, 
   ]
   
   const employeeLinks = [
     { href: "/dashboard", label: "Mon Dashboard", icon: LayoutDashboard }, 
+    { href: "/leaves", label: "Mes Congés", icon: Clock },
     { href: "/profile", label: "Mon Profil", icon: User },
   ]
 
@@ -99,14 +103,21 @@ export function SidebarContent() {
               key={link.href}
               href={link.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200",
+                "flex items-center justify-between gap-3 px-4 py-3 rounded-lg transition-colors duration-200",
                 isActive
                   ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-lg"
                   : "text-sidebar-foreground hover:bg-sidebar-accent/20",
               )}
             >
-              <Icon size={20} />
-              <span className="font-medium">{link.label}</span>
+              <div className="flex items-center gap-3">
+                <Icon size={20} />
+                <span className="font-medium">{link.label}</span>
+              </div>
+              {'badge' in link && typeof link.badge === 'number' && link.badge > 0 && (
+                <span className="bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.2rem] text-center">
+                  {link.badge}
+                </span>
+              )}
             </Link>
           )
         })}

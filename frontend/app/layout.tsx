@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from "@/lib/auth-context"
 import { AttendanceProvider } from "@/lib/attendance-context"
 import { EmployeeProvider } from "@/lib/employee-context"
+import { LeaveProvider } from "@/lib/leave-context"
 import { ThemeProvider } from "@/lib/theme-context"
 import { DataRefreshProvider } from "@/lib/data-refresh-context"
 import { AppLayout } from "@/components/layout/app-layout"
@@ -47,9 +48,11 @@ export default function RootLayout({
           <AuthProvider>
             <AttendanceProvider>
               <EmployeeProvider> 
-                <DataRefreshProvider>
-                  <AppLayout>{children}</AppLayout>
-                </DataRefreshProvider>
+                <LeaveProvider>
+                  <DataRefreshProvider>
+                    <AppLayout>{children}</AppLayout>
+                  </DataRefreshProvider>
+                </LeaveProvider>
               </EmployeeProvider>
             </AttendanceProvider>
           </AuthProvider>

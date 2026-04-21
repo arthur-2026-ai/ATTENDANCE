@@ -30,5 +30,28 @@ Avant de déployer votre code sur votre serveur Cloud, vous **devez** configurer
 3. **Pendant le déploiement sur DigitalOcean :**
    - Assurez-vous que ces 3 variables d'environnement sont injectées dans votre conteneur Docker Frontend (ou ajoutées dans votre fichier système/PaaS) afin que l'application compilée sache où sont situés les bureaux physiquement.
 
+## 📊 NOUVEAU : Rapports Exportables (CSV)
+Vous pouvez maintenant exporter vos données de présence directement depuis le Dashboard Administratif.
+
+1. **Utilisez les filtres** (Date, Département, Employé) pour afficher les données souhaitées.
+2. **Cliquez sur "Exporter (PDF/CSV)"**.
+3. Un fichier `.csv` sera immédiatement généré et téléchargé. 
+
+> [!TIP]
+> Le fichier est optimisé pour **Microsoft Excel** (encodage UTF-8 avec BOM), ce qui garantit que les accents et les noms s'afficheront correctement dès l'ouverture.
+
+## 📅 NOUVEAU : Gestion des Congés et Absences
+Un système complet pour gérer les permissions a été mis en place.
+
+### Pour les Employés :
+1. Cliquez sur **"Mes Congés"** dans la barre latérale.
+2. Utilisez le bouton **"Nouvelle Demande"** pour soumettre un congé (Payé, Maladie, etc.).
+3. Suivez l'évolution du statut (En attente, Approuvé, Refusé) en temps réel.
+
+### Pour les Administrateurs :
+1. Une **pastille rouge** dans la barre latérale indique le nombre de demandes en attente.
+2. Allez dans l'onglet **"Congés"** pour voir toutes les demandes.
+3. Donnez un avis (Approuver/Refuser) et ajoutez éventuellement un commentaire justificatif.
+
 > [!CAUTION]
 > **HTTPS obligatoire** : La plupart des navigateurs modernes (Chrome, Safari, Firefox mobile) **refusent de fournir la position GPS si le site n'est par sécurisé par `https://`**. Assurez-vous d'ajouter un certificat SSL (par exemple via Certbot/Let's Encrypt ou Nginx Proxy Manager) sur votre Droplet DigitalOcean.

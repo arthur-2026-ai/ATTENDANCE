@@ -119,7 +119,50 @@ export default function AttendancePage() {
   }
 
   const handleExport = () => {
-    console.log(`Déclenchement de l'exportation de ${filteredAttendance.length} enregistrements...`);
+    if (filteredAttendance.length === 0) {
+        alert("Aucune donnée à exporter.");
+        return;
+    }
+
+    // 1. En-têtes CSV
+    const headers = ["Date", "Employé", "Département", "Heure d'arrivée", "Heure de départ", "Statut"];
+    
+    // 2. Lignes de données
+    const csvRows = filteredAttendance.map(record => {
+        const employee = employeeMap.get(record.employeeId);
+        const name = employee ? employee.name : "Inconnu";
+        const dept = employee ? employee.department : "Inconnu";
+        
+        const arrival = record.arrivalTime || "-";
+        const departure = record.departureTime || "-";
+        
+        // Formatage de la ligne (utilisation de guillemets pour éviter les soucis avec d'éventuelles virgules)
+        return [
+            record.date,
+            `"${name}"`,
+            `"${dept}"`,
+            arrival,
+            departure,
+            record.status
+        ].join(",");
+    });
+
+    // 3. Assemblage (avec BOM \uFEFF pour forcer Excel à lire le fichier en UTF-8)
+    const csvContent = "\uFEFF" + [headers.join(","), ...csvRows].join("\n");
+    
+    // 4. Téléchargement via le navigateur
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    
+    // Nom du fichier avec la date du jour
+    const dateStr = new Date().toISOString().split('T')[0];
+    link.setAttribute("href", url);
+    link.setAttribute("download", `Rapport_Presences_${dateStr}.csv`);
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
   
   

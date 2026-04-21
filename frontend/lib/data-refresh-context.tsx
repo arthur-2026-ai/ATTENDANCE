@@ -3,6 +3,7 @@
 import { createContext, useContext, useCallback, type ReactNode, useState } from "react";
 import { useEmployees } from "./employee-context";
 import { useAttendance } from "./attendance-context"; 
+import { useLeaves } from "./leave-context"; 
 
 // Interface pour le contexte de rafraîchissement
 interface DataRefreshContextType {
@@ -18,8 +19,8 @@ export function DataRefreshProvider({ children }: { children: ReactNode }) {
     
     // Récupérer la fonction de chargement des employés
     const { loadEmployees } = useEmployees();
-    // ⚠️ Si vous aviez useAttendance, vous feriez :
     const { loadAttendance } = useAttendance();
+    const { loadLeaves } = useLeaves();
 
     const [isGlobalRefreshing, setIsGlobalRefreshing] = useState(false);
 
@@ -32,8 +33,8 @@ export function DataRefreshProvider({ children }: { children: ReactNode }) {
             // 1. Actualiser les employés
             await loadEmployees(); 
 
-            // 2. Actualiser la présence (Décommenter ceci quand useAttendance est prêt)
              await loadAttendance();
+             await loadLeaves();
 
             // 3. Ajouter d'autres appels de chargement ici si nécessaire (ex: départements, etc.)
 
@@ -45,7 +46,7 @@ export function DataRefreshProvider({ children }: { children: ReactNode }) {
         } finally {
             setIsGlobalRefreshing(false);
         }
-    }, [loadEmployees]); // Ajouter loadAttendance ici aussi si décommenté
+    }, [loadEmployees, loadAttendance, loadLeaves]); 
 
     const value = { refreshAllData, isGlobalRefreshing };
 
