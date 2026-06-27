@@ -1,70 +1,64 @@
 "use client"
 
-import { useState } from "react" 
-import { Card } from "../ui/card" // Chemin adapté
-import { Button } from "../ui/button" // Chemin adapté
-import { Input } from "../ui/input" // Chemin adapté
+import { useState } from "react"
+import { Card } from "../ui/card"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 import { Trash2, Edit2, Plus, Loader2 } from "lucide-react"
-import { useEmployees } from "../../lib/employee-context" 
+import { useEmployees } from "../../lib/employee-context"
 import { Employee } from "../../lib/employee-context-types"
-// L'importation de useAttendance a été retirée car elle n'était pas utilisée ici.
 
 // 🎯 INTERFACE DE PROP NÉCESSAIRE POUR RÉSOUDRE L'ERREUR DE TYPE
 interface EmployeeTableProps {
   onAddClick: () => void
   onEditClick: (employee: Employee) => void
-  onDeleteClick: (id: string) => void 
+  onDeleteClick: (id: string) => void
 }
 
 // 🎯 Le composant doit être exporté de manière standard pour être reconnu
 export function EmployeeTable({ onAddClick, onEditClick, onDeleteClick }: EmployeeTableProps) {
   const { employees, isLoading, deleteEmployee } = useEmployees();
-  
+
   const [searchTerm, setSearchTerm] = useState("")
-  
+
   const filteredEmployees = employees.filter(
     (emp) => {
       // Filtrage sécurisé
       const term = searchTerm.toLowerCase();
-      
+
       const firstNameMatch = emp.firstName?.toLowerCase().includes(term);
       const lastNameMatch = emp.lastName?.toLowerCase().includes(term);
       const emailMatch = emp.email?.toLowerCase().includes(term);
       const departmentMatch = emp.department?.toLowerCase().includes(term);
-      
+
       return firstNameMatch || lastNameMatch || emailMatch || departmentMatch;
     }
   );
-  
-  
+
+
   // --- Fonction de suppression réelle ---
-  // Remplacement de window.confirm/alert par des logs ou un modal non-bloquant
+
   const handleDelete = async (id: string) => {
-      console.log(`Tentative de suppression de l'employé ID: ${id}`);
-      
-      // Ici, nous utiliserions un modal personnalisé plutôt que window.confirm
-      const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cet employé ? (Utilisez un modal personnalisé dans l'application finale)");
-      
-      if (confirmed) {
-          try {
-              await deleteEmployee(id);
-              console.log("Employé supprimé avec succès !");
-              // on_DeleteClick(id); // Optionnel, si le parent a besoin de l'info
-          } catch (error) {
-              console.error("Échec de la suppression de l'employé.", error);
-              // Afficher un message d'erreur à l'utilisateur ici
-          }
+    // Ici, nous utiliserions un modal personnalisé plutôt que window.confirm
+    const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cet employé ? (Utilisez un modal personnalisé dans l'application finale)");
+
+    if (confirmed) {
+      try {
+        await deleteEmployee(id);
+      } catch (error) {
+        // Afficher un message d'erreur à l'utilisateur ici
       }
+    }
   }
 
   // --- RENDU ---
-  
+
   if (isLoading) {
     return (
-        <Card className="p-8 text-center flex flex-col items-center justify-center min-h-[200px]">
-            <Loader2 className="mr-2 h-6 w-6 animate-spin text-primary" />
-            <span className="text-lg mt-2 text-muted-foreground">Chargement des données employés...</span>
-        </Card>
+      <Card className="p-8 text-center flex flex-col items-center justify-center min-h-[200px]">
+        <Loader2 className="mr-2 h-6 w-6 animate-spin text-primary" />
+        <span className="text-lg mt-2 text-muted-foreground">Chargement des données employés...</span>
+      </Card>
     );
   }
 
@@ -135,7 +129,7 @@ export function EmployeeTable({ onAddClick, onEditClick, onDeleteClick }: Employ
         </div>
         {filteredEmployees.length === 0 && (
           <div className="p-8 text-center text-muted-foreground">
-              {searchTerm ? "Aucun employé trouvé correspondant à votre recherche." : "Il n'y a pas d'employés enregistrés."}
+            {searchTerm ? "Aucun employé trouvé correspondant à votre recherche." : "Il n'y a pas d'employés enregistrés."}
           </div>
         )}
       </Card>
