@@ -253,7 +253,7 @@ export function EmployeeTable({ onAddClick, onEditClick, onDeleteClick, onViewDe
                     </button>
                   </TableCell>
                   <TableCell className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{emp.email}</TableCell>
-                  { /*<TableCell className="px-4 py-4 whitespace-nowrap hidden lg:table-cell"><StatusBadge status={emp.status} /></TableCell>*/}
+                  <TableCell className="px-4 py-4 whitespace-nowrap"><StatusBadge status={emp.status} /></TableCell>
                   <TableCell className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{emp.department || '-'}</TableCell>
                   <TableCell className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">{new Date(emp.joinDate).toLocaleDateString('fr-FR')}</TableCell>
                   <TableCell className="px-4 py-4 whitespace-nowrap">

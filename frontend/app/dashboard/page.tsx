@@ -137,14 +137,14 @@ export default function DashboardPage() {
     // IDs des employés présents (présents ou en retard)
     const presentTodayIds = new Set(
       todayAttendance
-        .filter(record => record.status === 'Présent' || record.status === 'En retard')
+        .filter(record => record.status === 'Present' || record.status === 'Late')
         .map(record => record.employeeId)
     )
 
     // Calculs
     const totalEmployees = employees.length
     const presentToday = presentTodayIds.size
-    const lateArrivals = todayAttendance.filter(record => record.status === 'En retard').length
+    const lateArrivals = todayAttendance.filter(record => record.status === 'Late').length
     const absentToday = totalEmployees - presentToday
 
     // Liste des employés absents
