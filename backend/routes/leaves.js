@@ -41,7 +41,31 @@ router.post('/', auth, async (req, res) => {
         return res.status(400).json({ message: "Veuillez remplir tous les champs obligatoires." });
     }
 
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (start < today) {
+        return res.status(400).json({ message: "La date de début ne peut pas être dans le passé." });
+    }
+    if (end < start) {
+        return res.status(400).json({ message: "La date de fin doit être postérieure ou égale à la date de début." });
+    }
+
     try {
+        // Vérifier les chevauchements
+        const overlappingLeave = await Leave.findOne({
+            employeeId,
+            status: { $in: ['Pending', 'Approved'] },
+            $or: [
+                { startDate: { $lte: endDate }, endDate: { $gte: startDate } }
+            ]
+        });
+
+        if (overlappingLeave) {
+            return res.status(400).json({ message: "Vous avez déjà une demande de congé sur cette période." });
+        }
         const newLeave = await Leave.create({
             employeeId,
             type,

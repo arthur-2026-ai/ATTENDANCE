@@ -49,7 +49,11 @@ router.get('/', auth, async (req, res) => {
 // POST /api/attendance/check-in : Enregistrement d'arrivée
 // ------------------------------------------------------------------
 router.post('/check-in', auth, async (req, res) => {
-    const { date, time } = req.body; // 'time' est l'heure d'arrivée (ex: "09:05:30")
+    const serverDate = new Date();
+    // Utiliser l'heure locale du serveur au format YYYY-MM-DD
+    const date = serverDate.toLocaleDateString('en-CA'); 
+    // Utiliser l'heure locale au format HH:MM:SS
+    const time = serverDate.toTimeString().split(' ')[0];
     const employeeId = req.user.userId;
 
     try {
@@ -85,13 +89,14 @@ router.post('/check-in', auth, async (req, res) => {
 // POST /api/attendance/check-out : Enregistrement de départ
 // ------------------------------------------------------------------
 router.post('/check-out', auth, async (req, res) => {
-    const { date, time } = req.body;
+    const serverDate = new Date();
+    const time = serverDate.toTimeString().split(' ')[0];
     const employeeId = req.user.userId;
 
     try {
         // 1. Trouver l'enregistrement du jour qui n'a pas encore d'heure de départ
         const updatedRecord = await Attendance.findOneAndUpdate(
-            { employeeId, date, departureTime: null },
+            { employeeId, departureTime: null },
             { departureTime: time },
             { new: true } // Retourner le document mis à jour
         );

@@ -24,9 +24,19 @@ export function LeaveFormModal({ isOpen, onClose }: LeaveFormModalProps) {
         endDate: '',
         reason: ''
     });
+    const [errorMsg, setErrorMsg] = useState("");
+
+    const todayDate = new Date().toISOString().split('T')[0];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setErrorMsg("");
+
+        if (formData.endDate < formData.startDate) {
+            setErrorMsg("La date de fin doit être postérieure ou égale à la date de début.");
+            return;
+        }
+
         setIsSubmitting(true);
         try {
             await submitLeave(formData);
@@ -46,6 +56,11 @@ export function LeaveFormModal({ isOpen, onClose }: LeaveFormModalProps) {
                     <DialogTitle>Nouvelle Demande de Congé</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 py-4">
+                    {errorMsg && (
+                        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-200">
+                            {errorMsg}
+                        </div>
+                    )}
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Type de congé</label>
                         <select
@@ -67,6 +82,7 @@ export function LeaveFormModal({ isOpen, onClose }: LeaveFormModalProps) {
                             <Input
                                 type="date"
                                 value={formData.startDate}
+                                min={todayDate}
                                 onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
                                 required
                             />
@@ -76,6 +92,7 @@ export function LeaveFormModal({ isOpen, onClose }: LeaveFormModalProps) {
                             <Input
                                 type="date"
                                 value={formData.endDate}
+                                min={formData.startDate || todayDate}
                                 onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
                                 required
                             />
