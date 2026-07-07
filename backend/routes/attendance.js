@@ -17,6 +17,20 @@ const timeToMinutes = (timeString) => {
     // Convertir tout en minutes
     return (hours * 60) + minutes + (seconds / 60); 
 };
+
+const getCurrentLocalTime = () => {
+    // Utilise le fuseau horaire défini dans .env, ou par défaut l'heure d'Afrique Centrale / Paris (UTC+1)
+    const tz = process.env.TIMEZONE || 'Africa/Douala'; 
+    const now = new Date();
+    
+    // en-CA donne le format YYYY-MM-DD
+    const date = now.toLocaleDateString('en-CA', { timeZone: tz });
+    
+    // en-GB donne le format HH:MM:SS (24h)
+    const time = now.toLocaleTimeString('en-GB', { timeZone: tz, hour12: false });
+    
+    return { date, time };
+};
 // ------------------------------------------------------------------
 // GET /api/attendance : Récupérer les enregistrements
 // (Tous pour admin, seulement les siens pour employee)
@@ -49,11 +63,7 @@ router.get('/', auth, async (req, res) => {
 // POST /api/attendance/check-in : Enregistrement d'arrivée
 // ------------------------------------------------------------------
 router.post('/check-in', auth, async (req, res) => {
-    const serverDate = new Date();
-    // Utiliser l'heure locale du serveur au format YYYY-MM-DD
-    const date = serverDate.toLocaleDateString('en-CA'); 
-    // Utiliser l'heure locale au format HH:MM:SS
-    const time = serverDate.toTimeString().split(' ')[0];
+    const { date, time } = getCurrentLocalTime();
     const employeeId = req.user.userId;
 
     try {
@@ -89,8 +99,7 @@ router.post('/check-in', auth, async (req, res) => {
 // POST /api/attendance/check-out : Enregistrement de départ
 // ------------------------------------------------------------------
 router.post('/check-out', auth, async (req, res) => {
-    const serverDate = new Date();
-    const time = serverDate.toTimeString().split(' ')[0];
+    const { time } = getCurrentLocalTime();
     const employeeId = req.user.userId;
 
     try {

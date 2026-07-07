@@ -55,18 +55,18 @@ services:
       - app-network
     restart: always
 
-  seeder:
-    image: fotsohub/api-orionattendance:latest 
-    container_name: attendance_seeder
-    environment:
-      MONGO_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGO_INITDB_DATABASE}?authSource=admin
-    command: node seedUsers.js 
-    depends_on:
-      mongodb:
-        condition: service_started
-    restart: "no" 
-    networks:
-      - app-network
+#  seeder:
+#    image: fotsohub/api-orionattendance:latest 
+#    container_name: attendance_seeder
+#    environment:
+#      MONGO_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGO_INITDB_DATABASE}?authSource=admin
+#    command: node seedUsers.js 
+#    depends_on:
+#      mongodb:
+#        condition: service_started
+#    restart: "no" 
+#    networks:
+#      - app-network
 
 volumes:
   mongodb_data:

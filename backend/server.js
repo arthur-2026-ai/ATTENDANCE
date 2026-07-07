@@ -15,6 +15,7 @@ import leaveRoutes from './routes/leaves.js';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1); // Indispensable pour express-rate-limit derrière un proxy (comme Docker/Nginx)
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
